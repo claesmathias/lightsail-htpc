@@ -15,6 +15,9 @@ sudo mkdir /home/centos/lightsail-htpc/
 sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-htpc/master/docker-compose.yml -o /home/centos/lightsail-htpc/docker-compose.yml
 sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-htpc/master/nginx -o /home/centos/lightsail-htpc/nginx
 sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-htpc/master/nzbget.conf -o /home/centos/lightsail-htpc/nzbget.conf
+sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-htpc/master/sonarr.xml -o /home/centos/lightsail-htpc/sonarr.xml
+sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-htpc/master/radarr.xml -o /home/centos/lightsail-htpc/radarr.xml
+sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-htpc/master/nzbhydra.cfg -o /home/centos/lightsail-htpc/nzbhydra.cfg
 
 cat <<EOF >/home/centos/lightsail-htpc/.env
 HOST_IP=$(hostname --ip-address)
