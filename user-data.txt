@@ -1,0 +1,32 @@
+#!/bin/bash
+sudo yum update -y
+sudo yum install docker -y
+
+sudo groupadd docker
+sudo usermod -aG docker centos
+
+sudo systemctl enable docker.service
+sudo systemctl start docker.service
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+sudo mkdir /home/centos/lightsail-htpc/
+sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-htpc/master/docker-compose.yml -o /home/centos/lightsail-htpc/docker-compose.yml
+sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-htpc/master/nginx -o /home/centos/lightsail-htpc/nginx
+
+cat <<EOF >/home/centos/lightsail-htpc/.env
+HOST_IP=$(hostname --ip-address)
+EMAIL=FILL_IN
+URL=FILL_IN
+TOKEN=FILL_IN
+TZ=Europe/Brussels
+EOF
+
+sudo chown -R centos:centos /home/centos/lightsail-htpc/
+
+sudo chcon -Rt svirt_sandbox_file_t /home/centos
+restorecon -FRvv ~/.ssh
+
+cd /home/centos/lightsail-htpc/
+/usr/local/bin/docker-compose up -d
