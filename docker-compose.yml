@@ -102,6 +102,7 @@ services:
     restart: always
     volumes:
       - /home/centos/sonarr:/config
+      - /home/centos/lightsail-htpc/sonarr.xml:/config/config.xml
       - /home/centos/tv:/tv
       - /home/centos/downloads/complete:/downloads
     environment:
@@ -131,6 +132,7 @@ services:
     restart: always
     volumes:
       - /home/centos/radarr:/config
+      - /home/centos/lightsail-htpc/radarr.xml:/config/config.xml
       - /home/centos/downloads/complete:/downloads
       - /home/centos/movies:/movies
     environment:
@@ -160,6 +162,7 @@ services:
     restart: always
     volumes:
       - /home/centos/nzbhydra:/config
+      - /home/centos/lightsail-htpc/nzbhydra.cfg:/config/nzbhydra/settings.cfg
       - /home/centos/downloads:/downloads
     environment:
       - PGID=1000
