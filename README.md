@@ -5,7 +5,7 @@ Home theater PC on Lightsail with Plex, Sonarr, Radarr, Ombi, NZBGet, NZBHydra, 
 Edit the following lines in `user-data.txt` 
 ```
 EMAIL=example@mail.com
-URL=example.duckns.org
+URL=yoursubdomain.duckns.org
 TOKEN=duck-dns-token
 TZ=Europe/Brussels
 
@@ -27,12 +27,12 @@ aws lightsail open-instance-public-ports --port-info fromPort=32400,toPort=32400
 
 ## Application Setup
 The applications are available at the following urls with the user/password configured (default: admin/password)
-- Plex: `https://yoursubdomain.duckdns.org/` (to be configured first, see below)
-- Sonarr: `https://yoursubdomain.duckdns.org/sonarr`
-- Radarr: `https://yoursubdomain.duckdns.org/radarr`
-- NZBGet: `https://yoursubdomain.duckdns.org/nzbget`
-- NZBHydra: `https://yoursubdomain.duckdns.org/nzbhydra`
-- Ombi: `https://yoursubdomain.duckdns.org/ombi` (to be configured first, see below)
+- Plex: https://yoursubdomain.duckdns.org/ (to be configured first, see below)
+- Sonarr: https://yoursubdomain.duckdns.org/sonarr
+- Radarr: https://yoursubdomain.duckdns.org/radarr
+- NZBGet: https://yoursubdomain.duckdns.org/nzbget
+- NZBHydra: https://yoursubdomain.duckdns.org/nzbhydra
+- Ombi: https://yoursubdomain.duckdns.org/ombi (to be configured first, see below)
 
 Download the key file [here](https://lightsail.aws.amazon.com/ls/webapp/account/keys "AWS Lightsail keys")
 ```
