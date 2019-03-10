@@ -38,4 +38,4 @@ sudo chmod 777 /home/centos/tv/
 
 sudo chown -R centos:centos /home/centos/downloads/
 sudo chown -R centos:centos /home/centos/movies/
-sudo chown -R centos:centos /home/home/centos/tv/
+sudo chown -R centos:centos /home/centos/tv/
