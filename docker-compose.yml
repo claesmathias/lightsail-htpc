@@ -1,0 +1,247 @@
+version: '3'
+
+services:
+
+#
+# letsencrypt
+# This container sets up an Nginx webserver and reverse proxy with php support 
+# and a built-in letsencrypt client that automates free SSL server certificate generation and renewal processes. 
+# It also contains fail2ban for intrusion prevention.
+#
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    privileged: true
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - EMAIL=${EMAIL}
+      - URL=${URL}
+      - DHLEVEL=2048
+      - TZ=${TZ}
+      - VALIDATION=http
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /home/centos/letsencrypt:/config
+      - /home/centos/lightsail-openvpn-as/nginx:/config/nginx/site-confs/default
+    depends_on:
+      - "duckdns"
+      - "sonarr"
+      - "radarr"
+      - "nzbget"
+      - "plex"
+      - "ombi"
+    extra_hosts:
+      - "plex:${HOST_IP}"
+    networks:
+      - app_net
+    healthcheck:
+     test: ["CMD-SHELL", "curl -f --insecure https://localhost && echo 'OK'"]
+     interval: 5s
+     timeout: 2s
+     retries: 20
+
+#
+# duckdns
+# Duckdns is a free service which will point a DNS (sub domains of duckdns.org) to an IP of your choice. 
+# The service is completely free, and doesn't require reactivation or forum posts to maintain its existence.
+#
+  duckdns:
+    image: linuxserver/duckdns
+    container_name: duckdns
+    restart: always
+    environment:
+      - PUID=1000 #optional
+      - PGID=1000 #optional
+      - TZ=${TZ}
+      - SUBDOMAINS=${URL}
+      - TOKEN=${TOKEN}
+      - LOG_FILE=false #optional
+
+
+#
+# nzbget
+# NZBGet is a usenet downloader, written in C++ and designed with performance in mind to achieve maximum download speed by using very little system resources.
+#
+  nzbget:
+    image: linuxserver/nzbget
+    container_name: nzbget
+    restart: always
+    volumes:
+      - /home/centos/nzbget:/config
+      - /home/centos/downloads/complete:/downloads
+      - /home/cents/downloads/incomplete:/incomplete-downloads
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=${TZ}
+    ports:
+      - 6789:6789
+    networks:
+      - app_net
+    healthcheck:
+     test: ["CMD-SHELL", "curl -f http://localhost:6789 && echo 'OK'"]
+     interval: 5s
+     timeout: 2s
+     retries: 20
+
+#
+# sonarr
+# Sonarr (formerly NZBdrone) is a PVR for usenet and bittorrent users. 
+# It can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. 
+# It can also be configured to automatically upgrade the quality of files already downloaded when a better quality format becomes available.
+#
+  sonarr:
+    image: linuxserver/sonarr
+    container_name: sonarr
+    restart: always
+    volumes:
+      - /home/centos/sonarr:/config
+      - /home/centos/tv:/tv
+      - /home/centos/downloads/complete:/downloads
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=${TZ}
+    ports:
+      - 8989:8989
+      - 9898:9898
+    depends_on:
+      - "nzbget"  
+    networks:
+      - app_net
+    healthcheck:
+     test: ["CMD-SHELL", "curl -f http://localhost:8989 && echo 'OK'"]
+     interval: 5s
+     timeout: 2s
+     retries: 20
+
+#
+# radarr
+# Radarr is an independent fork of Sonarr reworked for automatically downloading movies via Usenet and BitTorrent.
+#
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
+    restart: always
+    volumes:
+      - /home/centos/radarr:/config
+      - /home/centos/downloads/complete:/downloads
+      - /home/centos/movies:/movies
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=${TZ}
+    ports:
+      - 7878:7878
+    depends_on:
+      - "nzbget" 
+    networks:
+      - app_net
+    healthcheck:
+     test: ["CMD-SHELL", "curl -f http://localhost:7878 && echo 'OK'"]
+     interval: 5s
+     timeout: 2s
+     retries: 20
+
+#
+# nzbhydra
+# NZBHydra is a meta search for NZB indexers and the "spiritual successor" to NZBmegasearcH.
+# It provides easy access to a number of raw and newznab based indexers.
+#
+  nzbhydra:
+    image: linuxserver/hydra
+    container_name: nzbhydra
+    restart: always
+    volumes:
+      - /home/centos/nzbhydra:/config
+      - /home/centos/downloads:/downloads
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=${TZ}
+    ports:
+      - 5075:5075
+    depends_on:
+      - "nzbget"
+    networks:
+      - app_net
+    healthcheck:
+     test: ["CMD-SHELL", "curl -f http://localhost:5075 && echo 'OK'"]
+     interval: 5s
+     timeout: 2s
+     retries: 20
+
+#
+# plex
+# Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.
+# This container is packaged as a standalone Plex Media Server.
+#
+  plex:
+    image: linuxserver/plex
+    container_name: plex
+    network_mode: "host"
+    restart: always
+    volumes:
+      - /home/centos/plex:/config
+      - /home/centos/tv:/data/tvshows
+      - /home/centos/movies:/data/movies
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=${TZ}
+      - VERSION=docker
+    healthcheck:
+     test: ["CMD-SHELL", "curl -f http://localhost:32400/web && echo 'OK'"]
+     interval: 5s
+     timeout: 2s
+     retries: 20
+
+#
+# ombi
+# Ombi allows you to host your own Plex Request and user management system.
+#
+  ombi:
+    image: linuxserver/ombi
+    container_name: ombi
+    restart: always
+    volumes:
+      - /home/centos/ombi:/config
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=${TZ}
+    networks:
+      - app_net
+    healthcheck:
+     test: ["CMD-SHELL", "curl -f http://localhost:3579 && echo 'OK'"]
+     interval: 5s
+     timeout: 2s
+     retries: 20
+
+#
+# watchtower
+# Watchtower is an application that will monitor your running Docker containers and watch for changes to the images that those containers were originally started from.
+# If watchtower detects that an image has changed, it will automatically restart the container using the new image.
+#
+  watchtower:
+    image: v2tec/watchtower
+    container_name: watchtower
+    privileged: true
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --cleanup
+
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+     driver: default
+     config:
+      - subnet: 172.20.0.0/16
