@@ -35,3 +35,7 @@ htpasswd -b -c /home/centos/letsencrypt/nginx/.htpasswd admin password
 sudo chmod 777 /home/centos/downloads/
 sudo chmod 777 /home/centos/movies/
 sudo chmod 777 /home/centos/tv/
+
+sudo chown -R centos:centos /home/centos/downloads/
+sudo chown -R centos:centos /home/centos/movies/
+sudo chown -R centos:centos /home/home/centos/tv/
