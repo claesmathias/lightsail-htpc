@@ -31,3 +31,7 @@ cd /home/centos/lightsail-htpc/
 /usr/local/bin/docker-compose up -d
 
 htpasswd -b -c /home/centos/letsencrypt/nginx/.htpasswd admin password
+
+sudo chmod 777 /home/centos/downloads/
+sudo chmod 777 /home/centos/movies/
+sudo chmod 777 /home/centos/tv/
