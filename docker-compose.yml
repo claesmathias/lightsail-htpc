@@ -63,7 +63,6 @@ services:
       - TOKEN=${TOKEN}
       - LOG_FILE=false #optional
 
-
 #
 # nzbget
 # NZBGet is a usenet downloader, written in C++ and designed with performance in mind to achieve maximum download speed by using very little system resources.
@@ -112,6 +111,8 @@ services:
     ports:
       - 8989:8989
       - 9898:9898
+    extra_hosts:
+      - "plex:${HOST_IP}"
     depends_on:
       - "nzbget"  
     networks:
@@ -141,6 +142,8 @@ services:
       - TZ=${TZ}
     ports:
       - 7878:7878
+    extra_hosts:
+      - "plex:${HOST_IP}"
     depends_on:
       - "nzbget" 
     networks:
