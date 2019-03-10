@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo yum update -y
-sudo yum install docker -y
+sudo yum install docker httpd-tools -y
 
 sudo groupadd docker
 sudo usermod -aG docker centos
@@ -22,6 +22,8 @@ URL=FILL_IN
 TOKEN=FILL_IN
 TZ=Europe/Brussels
 EOF
+
+htpasswd -b -c /home/centos/letsencrypt/nginx/.htpasswd admin password
 
 sudo chown -R centos:centos /home/centos/lightsail-htpc/
 
