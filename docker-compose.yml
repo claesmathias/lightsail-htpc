@@ -165,7 +165,7 @@ services:
     restart: always
     volumes:
       - /home/centos/nzbhydra:/config
-      - /home/centos/lightsail-htpc/nzbhydra.cfg:/config/nzbhydra/settings.cfg
+      - /home/centos/lightsail-htpc/nzbhydra.cfg:/config/hydra/settings.cfg
       - /home/centos/downloads:/downloads
     environment:
       - PGID=1000
