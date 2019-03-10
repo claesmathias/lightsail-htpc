@@ -73,7 +73,7 @@ services:
     container_name: nzbget
     restart: always
     volumes:
-      - /home/centos/nzbget:/config
+      - /home/centos/lightsail-htpc/nzbget.conf:/config/nzbget.conf
       - /home/centos/downloads/complete:/downloads
       - /home/cents/downloads/incomplete:/incomplete-downloads
     environment:
