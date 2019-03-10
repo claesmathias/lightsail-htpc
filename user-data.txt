@@ -24,6 +24,10 @@ EOF
 
 sudo chown -R centos:centos /home/centos/lightsail-htpc/
 
+sudo mkdir /home/centos/ombi/
+cp /home/centos/lightsail-htpc/OmbiSettings.db /home/centos/ombi/OmbiSettings.db
+sudo chown -R centos:centos /home/centos/ombi/
+
 sudo chcon -Rt svirt_sandbox_file_t /home/centos
 restorecon -FRvv ~/.ssh
 
