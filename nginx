@@ -93,6 +93,17 @@ server {
 		include /config/nginx/proxy.conf;
 		proxy_pass http://nzbhydra:5075/nzbhydra;
 	}
+	
+	# ombi
+        # Ombi allows you to host your own Plex Request and user management system.
+        location /ombi {
+        	proxy_http_version 1.1;
+       		proxy_set_header Upgrade $http_upgrade;
+        	proxy_set_header Connection keep-alive;
+        	proxy_set_header Host $host;
+        	proxy_cache_bypass $http_upgrade;
+                proxy_pass http://ombi:3579/ombi;
+        }
 
 }
 
