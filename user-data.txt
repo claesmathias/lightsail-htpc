@@ -16,7 +16,6 @@ sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-htpc/master/d
 sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-htpc/master/nginx -o /home/centos/lightsail-htpc/nginx
 sudo curl https://raw.githubusercontent.com/claesmathias/lightsail-htpc/master/nzbget.conf -o /home/centos/lightsail-htpc/nzbget.conf
 
-
 cat <<EOF >/home/centos/lightsail-htpc/.env
 HOST_IP=$(hostname --ip-address)
 EMAIL=FILL_IN
@@ -25,8 +24,6 @@ TOKEN=FILL_IN
 TZ=Europe/Brussels
 EOF
 
-htpasswd -b -c /home/centos/letsencrypt/nginx/.htpasswd admin password
-
 sudo chown -R centos:centos /home/centos/lightsail-htpc/
 
 sudo chcon -Rt svirt_sandbox_file_t /home/centos
@@ -34,3 +31,5 @@ restorecon -FRvv ~/.ssh
 
 cd /home/centos/lightsail-htpc/
 /usr/local/bin/docker-compose up -d
+
+htpasswd -b -c /home/centos/letsencrypt/nginx/.htpasswd admin password
