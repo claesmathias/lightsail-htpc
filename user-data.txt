@@ -30,7 +30,7 @@ EOF
 
 # download trakt.tv plugin
 wget https://github.com/trakt/Plex-Trakt-Scrobbler/archive/master.zip -O /home/centos/lightsail-htpc/Plex-Trakt-Scrobbler.zip
-unzip /home/centos/lightsail-htpc/Plex-Trakt-Scrobbler.zip -d /home/centos/lightsail-htpc/Plex-Trakt-Scrobbler
+unzip /home/centos/lightsail-htpc/Plex-Trakt-Scrobbler.zip -d /home/centos/lightsail-htpc/Plug-ins
 
 # set permissions
 sudo chown -R centos:centos /home/centos/lightsail-htpc/
