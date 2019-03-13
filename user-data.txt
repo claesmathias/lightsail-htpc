@@ -1,19 +1,25 @@
 #!/bin/bash
+# install the necessary tools
 sudo yum update -y
-sudo yum install docker httpd-tools git -y
+sudo yum install docker httpd-tools git wget -y
 
+# add new group and add centos user
 sudo groupadd docker
 sudo usermod -aG docker centos
 
+# enable docker at startup
 sudo systemctl enable docker.service
 sudo systemctl start docker.service
 
+# install docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
+# download resources from git
 cd /home/centos/
 git clone https://github.com/claesmathias/lightsail-htpc.git
 
+# set docker-compose environment variables
 cat <<EOF >/home/centos/lightsail-htpc/.env
 HOST_IP=$(hostname --ip-address)
 EMAIL=FILL_IN
@@ -22,20 +28,29 @@ TOKEN=FILL_IN
 TZ=Europe/Brussels
 EOF
 
+# download trakt.tv plugin
+wget https://github.com/trakt/Plex-Trakt-Scrobbler/archive/master.zip -O /home/centos/lightsail-htpc/Plex-Trakt-Scrobbler.zip
+unzip /home/centos/lightsail-htpc/Plex-Trakt-Scrobbler.zip -d /home/centos/lightsail-htpc/Plex-Trakt-Scrobbler
+
+# set permissions
 sudo chown -R centos:centos /home/centos/lightsail-htpc/
 
+# set selinux permissions
 sudo chcon -Rt svirt_sandbox_file_t /home/centos
+# reset ssh permissions
 restorecon -FRvv ~/.ssh
 
+# start docker containers
 cd /home/centos/lightsail-htpc/
 /usr/local/bin/docker-compose up -d
 
+# create basic auth user
 htpasswd -b -c /home/centos/letsencrypt/nginx/.htpasswd admin password
 
+# set permissions
 sudo chmod 777 /home/centos/downloads/
 sudo chmod 777 /home/centos/movies/
 sudo chmod 777 /home/centos/tv/
-
 sudo chown -R centos:centos /home/centos/downloads/
 sudo chown -R centos:centos /home/centos/movies/
 sudo chown -R centos:centos /home/centos/tv/
