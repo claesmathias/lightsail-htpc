@@ -197,7 +197,7 @@ services:
       - /home/centos/plex:/config
       - /home/centos/tv:/data/tvshows
       - /home/centos/movies:/data/movies
-#      - /home/centos/lightsail-htpc/Plug-ins:"/config/Library/Application Support/Plex Media Server/Plug-ins/"
+      - /home/centos/lightsail-htpc/Plug-ins/Trakttv.bundle:/config/Library/Application Support/Plex Media Server/Plug-ins/Trakttv.bundle
     environment:
       - PGID=1000
       - PUID=1000
