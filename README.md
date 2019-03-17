@@ -1,5 +1,5 @@
 # lightsail-htpc
-Home theater PC on Lightsail with Plex, Sonarr, Radarr, Ombi, NZBGet, NZBHydra, Letsecnrypt, DuckDNS
+Home theater PC on Lightsail with Plex, Sonarr, Radarr, Ombi, NZBGet, NZBHydra, Letsencrypt, DuckDNS
 
 ## Edit config
 Edit the following lines in `user-data.txt` 
