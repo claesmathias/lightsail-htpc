@@ -163,7 +163,7 @@ services:
       - TZ=Europe/London
     volumes:
       - /home/centos/bazarr:/config
-      - /home/centos/docker-network/bazarr.ini:/config/config/config.ini
+      - /home/centos/lightsail-htpc/bazarr.ini:/config/config/config.ini
       - /home/centos/movies:/movies
       - /home/centos/tv:/tv
     depends_on:
