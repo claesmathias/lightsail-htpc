@@ -23,7 +23,8 @@ git clone https://github.com/claesmathias/lightsail-htpc.git
 cat <<EOF >/home/centos/lightsail-htpc/.env
 HOST_IP=$(hostname --ip-address)
 EMAIL=FILL_IN
-URL=FILL_IN
+URL=FILL_IN.duckdns.org
+EXTRA_DOMAINS=
 TOKEN=FILL_IN
 HOME=/home/centos
 TZ=Europe/Brussels
