@@ -55,3 +55,8 @@ Forward Ombi port (3579) and Plex port (32400) and start configuring the applica
 ```
 ssh -i LightsailDefaultKey-eu-central-1.pem  centos@PUBLIC_IP -L 3579:localhost:3579 -L 32400:localhost:32400
 ```
+
+## Aftercare
+### Portainer - docker user interface
+View containers https://yoursubdomain.duckdns.org/portainer
+

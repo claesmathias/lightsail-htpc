@@ -4,6 +4,10 @@ upstream plex-upstream {
     server plex:32400;
 }
 
+upstream portainer {
+    server portainer:9000;
+}
+
 # listening on port 80 disabled by default, remove the "#" signs to enable
 # redirect all traffic to https
 server {
@@ -113,6 +117,14 @@ server {
         	proxy_cache_bypass $http_upgrade;
                 proxy_pass http://ombi:3579/ombi;
         }
+
+	# portainer
+	# Simple management UI for Docker.
+  	location /portainer/ {
+      		proxy_http_version 1.1;
+      		proxy_set_header Connection "";
+      		proxy_pass http://portainer/;
+	}
 
 }
 
