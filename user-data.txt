@@ -26,7 +26,6 @@ EMAIL=FILL_IN
 URL=FILL_IN.duckdns.org
 EXTRA_DOMAINS=
 TOKEN=FILL_IN
-HOME=/home/centos
 TZ=Europe/Brussels
 EOF
 
@@ -49,6 +48,9 @@ cd /home/centos/lightsail-htpc/
 
 # create basic auth user
 htpasswd -b -c /home/centos/letsencrypt/nginx/.htpasswd admin password
+
+# set portainer admin passwod
+echo -n password > /home/centos/lightsail-htpc/portainer_secret.txt
 
 # set permissions
 sudo chmod 777 /home/centos/downloads/

@@ -10,6 +10,8 @@ TOKEN=duck-dns-token
 TZ=Europe/Brussels
 
 htpasswd -b -c /home/centos/letsencrypt/nginx/.htpasswd admin password
+
+echo -n password > /home/centos/lightsail-htpc/portainer_secret.txt
 ```
 
 ## Create instance
