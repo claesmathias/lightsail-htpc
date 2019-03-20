@@ -6,6 +6,7 @@ Edit the following lines in `user-data.txt`
 ```
 EMAIL=example@mail.com
 URL=yoursubdomain.duckns.org
+EXTRA_DOMAINS=
 TOKEN=duck-dns-token
 TZ=Europe/Brussels
 
