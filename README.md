@@ -51,7 +51,7 @@ chmod 600 LightsailDefaultKey-eu-central-1.pem
 ```
 Obtain the public IP
 ```
-aws lightsail get-instance --instance-name lightsail-eu-central-vm | grep publicIpAddress
+aws lightsail get-instance --instance-name lightsail-htpc-eu-central-vm | grep publicIpAddress
 ```
 Forward Ombi port (3579) and Plex port (32400) and start configuring the applications via http://localhost:3579 http://localhost:32400/web
 ```
