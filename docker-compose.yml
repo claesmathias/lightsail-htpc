@@ -162,7 +162,7 @@ services:
       - PGID=1000
       - TZ=Europe/London
     volumes:
-      - $HOME/bazarr:/config
+      - /home/centos/bazarr:/config
       - /home/centos/docker-network/bazarr.ini:/config/config/config.ini
       - /home/centos/movies:/movies
       - /home/centos/tv:/tv
