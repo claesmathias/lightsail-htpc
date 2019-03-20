@@ -25,6 +25,7 @@ HOST_IP=$(hostname --ip-address)
 EMAIL=FILL_IN
 URL=FILL_IN
 TOKEN=FILL_IN
+HOME=/home/centos
 TZ=Europe/Brussels
 EOF
 

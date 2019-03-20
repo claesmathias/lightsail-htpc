@@ -79,8 +79,6 @@ services:
       - PGID=1000
       - PUID=1000
       - TZ=${TZ}
-    ports:
-      - 6789:6789
     networks:
       - app_net
     healthcheck:
@@ -108,9 +106,6 @@ services:
       - PGID=1000
       - PUID=1000
       - TZ=${TZ}
-    ports:
-      - 8989:8989
-      - 9898:9898
     extra_hosts:
       - "plex:${HOST_IP}"
     depends_on:
@@ -140,8 +135,6 @@ services:
       - PGID=1000
       - PUID=1000
       - TZ=${TZ}
-    ports:
-      - 7878:7878
     extra_hosts:
       - "plex:${HOST_IP}"
     depends_on:
@@ -150,6 +143,34 @@ services:
       - app_net
     healthcheck:
      test: ["CMD-SHELL", "curl -f http://localhost:7878 && echo 'OK'"]
+     interval: 5s
+     timeout: 2s
+     retries: 20
+
+#
+# bazarr
+# Bazarr is a companion application to Sonarr and Radarr. It can manage and download subtitles based on your requirements.
+#
+  bazarr:
+    image: linuxserver/bazarr
+    container_name: bazarr
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - $HOME/bazarr:/config
+      - /home/centos/docker-network/bazarr.ini:/config/config/config.ini
+      - /home/centos/movies:/movies
+      - /home/centos/tv:/tv
+    depends_on:
+      - "sonarr"
+      - "radarr"
+    networks:
+      - app_net
+    healthcheck:
+     test: ["CMD-SHELL", "curl -f http://localhost:6767 && echo 'OK'"]
      interval: 5s
      timeout: 2s
      retries: 20
@@ -171,8 +192,6 @@ services:
       - PGID=1000
       - PUID=1000
       - TZ=${TZ}
-    ports:
-      - 5075:5075
     depends_on:
       - "nzbget"
     networks:

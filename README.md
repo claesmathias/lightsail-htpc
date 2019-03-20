@@ -30,6 +30,7 @@ The applications are available at the following urls with the user/password conf
 - Plex: https://yoursubdomain.duckdns.org/ (to be configured first, see below)
 - Sonarr: https://yoursubdomain.duckdns.org/sonarr
 - Radarr: https://yoursubdomain.duckdns.org/radarr
+- Bazarr: https://yoursubdomain.duckdns.org/bazarr
 - NZBGet: https://yoursubdomain.duckdns.org/nzbget
 - NZBHydra: https://yoursubdomain.duckdns.org/nzbhydra
 - Ombi: https://yoursubdomain.duckdns.org/ombi (to be configured first, see below)
