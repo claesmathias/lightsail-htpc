@@ -19,10 +19,18 @@ aws lightsail create-instances --instance-names "lightsail-htpc-eu-central-vm" -
 ```
 You can find the script in `/var/lib/cloud/instance/user-data.txt` on the instance
 
-## Configure instance - open ports
+## Configure instance
+### Open ports
 ```
 aws lightsail open-instance-public-ports --port-info fromPort=443,toPort=443,protocol=TCP --instance-name lightsail-htpc-eu-central-vm
 aws lightsail open-instance-public-ports --port-info fromPort=32400,toPort=32400,protocol=TCP --instance-name lightsail-htpc-eu-central-vm
+```
+### Assign static IP (optional)
+Static IP addresses are free only while attached to an instance. You can manage five at no additional cost.
+```
+aws lightsail allocate-static-ip --static-ip-name lightsail-htpc-eu-central-vm-static-ip
+aws lightsail attach-static-ip --static-ip-name lightsail-htpc-eu-central-vm-static-ip --instance-name lightsail-htpc-eu-central-vm
+aws lightsail get-static-ip --static-ip-name lightsail-htpc-eu-central-vm-static-ip | grep ipAddress
 ```
 
 ## Application Setup
