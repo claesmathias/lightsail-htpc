@@ -1,6 +1,5 @@
 #!/bin/bash
 # install the necessary tools
-sudo yum update -y
 sudo yum install docker httpd-tools git wget unzip -y
 
 # add new group and add centos user
@@ -12,7 +11,7 @@ sudo systemctl enable docker.service
 sudo systemctl start docker.service
 
 # install docker-compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
 # download resources from git
@@ -22,11 +21,21 @@ git clone https://github.com/claesmathias/lightsail-htpc.git
 # set docker-compose environment variables
 cat <<EOF >/home/centos/lightsail-htpc/.env
 HOST_IP=$(hostname --ip-address)
-EMAIL=FILL_IN
-URL=FILL_IN.duckdns.org
+EMAIL=mail@example.com
+URL=example.com
 EXTRA_DOMAINS=
-TOKEN=FILL_IN
 TZ=Europe/Brussels
+EOF
+
+# set noip variables
+cat <<EOF >/home/centos/lightsail-theia-ide/noip.conf
+# This is an email address
+USERNAME='mal@example.com'
+PASSWORD='***************'
+# Your hostname, group name, or a comma-delimited list of a mix of them.
+DOMAINS='htpc.claesmathias.com'
+# Examples: 5 m, 5 h, 5 d. Minimum is 5 minutes.
+INTERVAL='5m'
 EOF
 
 # download trakt.tv plugin
@@ -43,14 +52,16 @@ sudo chcon -Rt svirt_sandbox_file_t /home/centos
 restorecon -FRvv ~/.ssh
 
 # start docker containers
-cd /home/centos/lightsail-htpc/
-/usr/local/bin/docker-compose up -d
+/usr/local/bin/docker-compose -f /home/centos/lightsail-htpc/docker-compose.yml up -d
+
+# generate random password
+PASSWORD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
 
 # create basic auth user
-htpasswd -b -c /home/centos/letsencrypt/nginx/.htpasswd admin password
+htpasswd -b -c /home/centos/letsencrypt/nginx/.htpasswd admin $PASSWORD
 
 # set portainer admin passwod
-echo -n password > /home/centos/lightsail-htpc/portainer_secret.txt
+echo -n $PASSWORD > /home/centos/lightsail-htpc/portainer_secret.txt
 
 # set permissions
 sudo chmod 777 /home/centos/downloads/
