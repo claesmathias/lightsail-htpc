@@ -48,21 +48,22 @@ sudo chown -R centos:centos /home/centos/lightsail-htpc/
 
 # set selinux permissions
 sudo chcon -Rt svirt_sandbox_file_t /home/centos
-# reset ssh permissions
-restorecon -FRvv ~/.ssh
+
+# generate random password
+PASSWORD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
+
+# set portainer admin passwod
+echo -n $PASSWORD > /home/centos/lightsail-htpc/portainer_secret.txt
 
 # start docker containers
 cd /home/centos/lightsail-htpc/
 /usr/local/bin/docker-compose up -d
 
-# generate random password
-PASSWORD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
-
 # create basic auth user
 htpasswd -b -c /home/centos/letsencrypt/nginx/.htpasswd admin $PASSWORD
 
-# set portainer admin passwod
-echo -n $PASSWORD > /home/centos/lightsail-htpc/portainer_secret.txt
+# reset ssh permissions
+restorecon -FRvv ~/.ssh
 
 # set permissions
 sudo chmod 777 /home/centos/downloads/
