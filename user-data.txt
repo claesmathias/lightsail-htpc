@@ -30,10 +30,10 @@ EOF
 # set noip variables
 cat <<EOF >/home/centos/lightsail-htpc/noip.conf
 # This is an email address
-USERNAME='mal@example.com'
-PASSWORD='***************'
+USERNAME='mail@example.com'
+PASSWORD='****************'
 # Your hostname, group name, or a comma-delimited list of a mix of them.
-DOMAINS='htpc.claesmathias.com'
+DOMAINS='example.com'
 # Examples: 5 m, 5 h, 5 d. Minimum is 5 minutes.
 INTERVAL='5m'
 EOF
