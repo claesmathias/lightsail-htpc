@@ -28,7 +28,7 @@ TZ=Europe/Brussels
 EOF
 
 # set noip variables
-cat <<EOF >/home/centos/lightsail-theia-ide/noip.conf
+cat <<EOF >/home/centos/lightsail-htpc/noip.conf
 # This is an email address
 USERNAME='mal@example.com'
 PASSWORD='***************'
@@ -52,7 +52,8 @@ sudo chcon -Rt svirt_sandbox_file_t /home/centos
 restorecon -FRvv ~/.ssh
 
 # start docker containers
-/usr/local/bin/docker-compose -f /home/centos/lightsail-htpc/docker-compose.yml up -d
+cd /home/centos/lightsail-htpc/
+/usr/local/bin/docker-compose up -d
 
 # generate random password
 PASSWORD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
