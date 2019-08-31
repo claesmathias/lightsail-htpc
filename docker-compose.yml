@@ -76,7 +76,7 @@ services:
     volumes:
       - /home/centos/lightsail-htpc/nzbget.conf:/config/nzbget.conf
       - /home/centos/downloads/complete:/downloads
-      - /home/cents/downloads/incomplete:/incomplete-downloads
+      - /home/centos/downloads/incomplete:/incomplete-downloads
     environment:
       - PGID=1000
       - PUID=1000
