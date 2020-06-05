@@ -222,6 +222,7 @@ services:
       - PUID=1000
       - TZ=${TZ}
       - VERSION=docker
+      - PLEX_CLAIM=${PLEX_CLAIM}
     healthcheck:
      test: ["CMD-SHELL", "curl -f http://localhost:32400/web && echo 'OK'"]
      interval: 5s
