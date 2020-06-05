@@ -49,21 +49,19 @@ services:
      retries: 20
 
 #
-# no-ip
-# This is a simple Docker container for running the No-IP2 dynamic DNS update script. 
-# It will keep your domain.ddns.net DNS alias up-to-date as your home IP changes.
-#
-  no-ip:
-    image: coppit/no-ip
-    container_name: noip
-    restart: always
-    volumes:
-      - /etc/localtime:/etc/localtime
-      - /home/centos/noip:/config
-      - /home/centos/lightsail-htpc/noip.conf:/config/noip.conf
+# duckdns
+# Duck DNS free dynamic DNS hosted on Amazon VPC.
+#    
+  duckdns:
+    image: linuxserver/duckdns
+    container_name: duckdns
     environment:
-      - PGID=1000 #optional
-      - PUID=1000 #optional
+      - TZ=${TZ}
+      - SUBDOMAINS=${DUCKDNS_SUBDOMAINS}
+      - TOKEN=${DUCKDNS_TOKEN}
+    volumes:
+      - /home/centos/duckdns/config:/config #optional
+    restart: unless-stopped
 
 #
 # nzbget
