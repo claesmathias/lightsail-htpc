@@ -4,15 +4,12 @@ Home theater PC on Lightsail with Plex, Sonarr, Radarr, Ombi, NZBGet, NZBHydra, 
 ## Edit config
 Edit the following lines in `user-data.txt` 
 ```
-EMAIL=example@mail.com
-URL=yoursubdomain.duckns.org
-EXTRA_DOMAINS=
-TOKEN=duck-dns-token
+EMAIL=mail@example.com
+URL=subdomain.duckdns.org
+EXTRA_DOMAINS=example.com
+DUCKDNS_SUBDOMAINS=subdomain.duckdns.org
+DUCKDNS_TOKEN=duck-dns-token
 TZ=Europe/Brussels
-
-htpasswd -b -c /home/centos/letsencrypt/nginx/.htpasswd admin password
-
-echo -n password > /home/centos/lightsail-htpc/portainer_secret.txt
 ```
 
 ## Create instance
@@ -58,8 +55,3 @@ Forward Ombi port (3579) and Plex port (32400) and start configuring the applica
 ```
 ssh -i LightsailDefaultKey-eu-central-1.pem  centos@PUBLIC_IP -L 3579:localhost:3579 -L 32400:localhost:32400
 ```
-
-## Aftercare
-### Portainer - docker user interface
-View containers https://yoursubdomain.duckdns.org/portainer
-
