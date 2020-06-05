@@ -9,6 +9,7 @@ URL=subdomain.duckdns.org
 EXTRA_DOMAINS=example.com #Optional
 DUCKDNS_SUBDOMAINS=subdomain.duckdns.org
 DUCKDNS_TOKEN=duck-dns-token
+PLEX_CLAIM=plex-claim-token
 TZ=Europe/Brussels
 ```
 
