@@ -22,20 +22,11 @@ git clone https://github.com/claesmathias/lightsail-htpc.git
 cat <<EOF >/home/centos/lightsail-htpc/.env
 HOST_IP=$(hostname --ip-address)
 EMAIL=mail@example.com
-URL=example.com
-EXTRA_DOMAINS=
+URL=subdomain.duckdns.org
+EXTRA_DOMAINS=example.com
+DUCKDNS_SUBDOMAINS=subdomain.duckdns.org
+DUCKDNS_TOKEN=duck-dns-token
 TZ=Europe/Brussels
-EOF
-
-# set noip variables
-cat <<EOF >/home/centos/lightsail-htpc/noip.conf
-# This is an email address
-USERNAME='mail@example.com'
-PASSWORD='****************'
-# Your hostname, group name, or a comma-delimited list of a mix of them.
-DOMAINS='example.com'
-# Examples: 5 m, 5 h, 5 d. Minimum is 5 minutes.
-INTERVAL='5m'
 EOF
 
 # download trakt.tv plugin
@@ -51,9 +42,6 @@ sudo chcon -Rt svirt_sandbox_file_t /home/centos
 
 # generate random password
 PASSWORD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
-
-# set portainer admin passwod
-echo -n $PASSWORD > /home/centos/lightsail-htpc/portainer_secret.txt
 
 # start docker containers
 cd /home/centos/lightsail-htpc/
