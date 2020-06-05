@@ -44,6 +44,9 @@ sudo chcon -Rt svirt_sandbox_file_t /home/centos
 cd /home/centos/lightsail-htpc/
 /usr/local/bin/docker-compose up -d
 
+# reset ssh permissions
+restorecon -FRvv ~/.ssh
+
 # wait
 sleep 2m
 
@@ -52,9 +55,6 @@ PASSWORD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
 
 # create basic auth user
 htpasswd -b -c /home/centos/letsencrypt/nginx/.htpasswd admin $PASSWORD
-
-# reset ssh permissions
-restorecon -FRvv ~/.ssh
 
 # set permissions
 sudo chmod 777 /home/centos/downloads/
