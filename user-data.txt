@@ -20,7 +20,7 @@ git clone https://github.com/claesmathias/lightsail-htpc.git
 
 # set docker-compose environment variables
 cat <<EOF >/home/centos/lightsail-htpc/.env
-HOST_IP=$(hostname --ip-address)
+HOST_IP=172.17.0.1
 EMAIL=mail@example.com
 URL=subdomain.duckdns.org
 EXTRA_DOMAINS=example.com
