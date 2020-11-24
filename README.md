@@ -16,7 +16,7 @@ TZ=Europe/Brussels
 ## Create instance
 Create AWS Lightsail instance via [AWS Lightsail CLI](https://docs.aws.amazon.com/cli/latest/reference/lightsail/index.html "AWS Lightsail CLI")
 ```
-aws lightsail create-instances --instance-names "htpc-vm" --availability-zone eu-west-2a --blueprint-id centos_7_1901_01 --bundle-id xlarge_2_0 --user-data file://user-data.txt
+aws lightsail create-instances --instance-names "htpc-vm" --availability-zone eu-west-2a --blueprint-id centos_7_1901_01 --bundle-id medium_2_0 --user-data file://user-data.txt
 ```
 You can find the script in `/var/lib/cloud/instance/user-data.txt` on the instance
 
@@ -32,6 +32,22 @@ Static IP addresses are free only while attached to an instance. You can manage 
 aws lightsail allocate-static-ip --static-ip-name htpc-vm-static-ip
 aws lightsail attach-static-ip --static-ip-name htpc-vm-static-ip --instance-name htpc-vm
 aws lightsail get-static-ip --static-ip-name htpc-vm-static-ip | grep ipAddress
+```
+
+### Create snapshot (optional)
+```
+aws lightsail create-instance-snapshot \
+    --instance-name htpc-vm \
+    --instance-snapshot-name htpc-vm-snapshot
+```
+
+### Restore snapshot (optional)
+```
+aws lightsail create-instances-from-snapshot \
+    --instance-snapshot-name htpc-vm-snapshot \
+    --instance-names htpc-vm \
+    --availability-zone eu-west-2a \
+    --bundle-id medium_2_0
 ```
 
 ## Application Setup
