@@ -243,6 +243,7 @@ services:
       - PGID=1000
       - PUID=1000
       - TZ=${TZ}
+      - BASE_URL=/ombi
     ports:
       - 3579:3579
     networks:
