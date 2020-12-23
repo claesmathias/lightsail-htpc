@@ -88,6 +88,46 @@ services:
      retries: 20
 
 #
+# transmission
+# Transmission has the features you want from a BitTorrent client.
+#
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+      - USER=username #optional
+      - PASS=password #optional
+    volumes:
+      - /home/centos/transmission:/config
+      - /home/centos/downloads/complete:/downloads
+      - /home/centos/watch:/watch
+    networks:
+      - app_net
+
+#
+# jackett
+# Jackett is a single repository of maintained indexer scraping & translation logic - removing the burden from other apps.
+#
+  jackett:
+    image: linuxserver/jackett
+    container_name: jackett
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+    volumes:
+      - /home/centos/jackatt:/config
+      - /home/centos/watch:/downloads
+    networks:
+      - app_net
+
+#
 # sonarr
 # Sonarr (formerly NZBdrone) is a PVR for usenet and bittorrent users. 
 # It can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. 
@@ -109,7 +149,8 @@ services:
     extra_hosts:
       - "plex:${HOST_IP}"
     depends_on:
-      - "nzbget"  
+      - "nzbget"
+      - "transmission" 
     networks:
       - app_net
     healthcheck:
