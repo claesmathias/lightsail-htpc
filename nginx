@@ -94,13 +94,23 @@ server {
                 include /config/nginx/proxy.conf;
                 proxy_pass http://bazarr:6767/bazarr;
         }
-
+	
+        # nzbhydra
 	# Meta search for NZB indexers. 
 	location ^~ /nzbhydra/ {
 		auth_basic "Restricted";
 		auth_basic_user_file /config/nginx/.htpasswd;
 		include /config/nginx/proxy.conf;
 		proxy_pass http://nzbhydra:5075/nzbhydra;
+	}
+	
+	# jackett
+	# Jackett is a single repository of maintained indexer scraping & translation logic.
+	location ^~ /jackett/ {
+		auth_basic "Restricted";
+		auth_basic_user_file /config/nginx/.htpasswd;
+		include /config/nginx/proxy.conf;
+		proxy_pass http://jackett:9117;
 	}
 	
 	# ombi
