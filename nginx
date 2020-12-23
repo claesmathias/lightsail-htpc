@@ -106,15 +106,11 @@ server {
 	
 	# jackett
 	# Jackett is a single repository of maintained indexer scraping & translation logic.
-	location ^~ /jackett/ {
+	location /jackett {
 		auth_basic "Restricted";
 		auth_basic_user_file /config/nginx/.htpasswd;
+		include /config/nginx/proxy.conf;
 		proxy_pass http://jackett:9117;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-		proxy_set_header X-Forwarded-Proto $scheme;
-		proxy_set_header X-Forwarded-Host $http_host;
-		proxy_redirect off;
 	}
 	
 	# ombi
