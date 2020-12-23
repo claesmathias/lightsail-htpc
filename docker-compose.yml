@@ -36,6 +36,8 @@ services:
       - "radarr"
       - "bazarr"
       - "nzbget"
+      - "jackett"
+      - "transmission"
       - "plex"
       - "ombi"
     extra_hosts:
@@ -147,7 +149,7 @@ services:
       - "plex:${HOST_IP}"
     depends_on:
       - "nzbget"
-      - "transmission" 
+      - "transmission"
     networks:
       - app_net
     healthcheck:
@@ -176,7 +178,8 @@ services:
     extra_hosts:
       - "plex:${HOST_IP}"
     depends_on:
-      - "nzbget" 
+      - "nzbget"
+      - "transmission"
     networks:
       - app_net
     healthcheck:
