@@ -260,7 +260,7 @@ services:
 # If watchtower detects that an image has changed, it will automatically restart the container using the new image.
 #
   watchtower:
-    image: v2tec/watchtower
+    image: containrrr/watchtower
     container_name: watchtower
     privileged: true
     restart: always
