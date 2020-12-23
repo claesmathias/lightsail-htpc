@@ -121,7 +121,7 @@ services:
       - PGID=1000
       - TZ=${TZ}
     volumes:
-      - /home/centos/jackatt:/config
+      - /home/centos/jackett:/config
       - /home/centos/watch:/downloads
     networks:
       - app_net
