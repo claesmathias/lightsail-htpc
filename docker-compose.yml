@@ -92,7 +92,7 @@ services:
 
 #
 # deluge
-# Torrent client.
+# BitTorrent client.
 #
   deluge:
     image: ghcr.io/linuxserver/deluge
