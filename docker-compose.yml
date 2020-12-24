@@ -95,16 +95,14 @@ services:
 # BitTorrent client.
 #
   deluge:
-    image: ghcr.io/linuxserver/deluge
+    image: linuxserver/deluge
     container_name: deluge
     network_mode: host
     restart: always
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
-      - UMASK_SET=022 #optional
-      - DELUGE_LOGLEVEL=error #optional
+      - TZ=${TZ}
     volumes:
       - /home/centos/deluge:/config
       - /home/centos/downloads/complete:/downloads
