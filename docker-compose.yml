@@ -101,10 +101,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=${TZ}
-      - TRANSMISSION_RPC_WHITELIST_ENABLED=true
-      - TRANSMISSION_RPC_HOST_WHITELIST_ENABLED=true
-      - TRANSMISSION_RPC_HOST_WHITELIST=172.20.x.x
-      - TRANSMISSION_RPC_WHITELIST=172.20.x.x
+      - USER=username #optional
+      - PASS=password #optional
     volumes:
       - /home/centos/transmission:/config
       - /home/centos/downloads/complete:/downloads
