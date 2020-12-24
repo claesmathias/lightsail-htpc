@@ -37,11 +37,12 @@ services:
       - "bazarr"
       - "nzbget"
       - "jackett"
-      - "transmission"
+      - "deluge"
       - "plex"
       - "ombi"
     extra_hosts:
       - "plex:${HOST_IP}"
+      - "deluge:${HOST_IP}"
     networks:
       - app_net
     healthcheck:
@@ -90,25 +91,23 @@ services:
      retries: 20
 
 #
-# transmission
-# Transmission has the features you want from a BitTorrent client.
+# deluge
+# Torrent client.
 #
-  transmission:
-    image: linuxserver/transmission
-    container_name: transmission
+  deluge:
+    image: ghcr.io/linuxserver/deluge
+    container_name: deluge
+    network_mode: host
     restart: always
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=${TZ}
-      - USER=username #optional
-      - PASS=password #optional
+      - TZ=Europe/London
+      - UMASK_SET=022 #optional
+      - DELUGE_LOGLEVEL=error #optional
     volumes:
-      - /home/centos/transmission:/config
+      - /home/centos/deluge:/config
       - /home/centos/downloads/complete:/downloads
-      - /home/centos/watch:/watch
-    networks:
-      - app_net
 
 #
 # jackett
@@ -151,7 +150,6 @@ services:
       - "plex:${HOST_IP}"
     depends_on:
       - "nzbget"
-      - "transmission"
     networks:
       - app_net
     healthcheck:
@@ -181,7 +179,6 @@ services:
       - "plex:${HOST_IP}"
     depends_on:
       - "nzbget"
-      - "transmission"
     networks:
       - app_net
     healthcheck:
